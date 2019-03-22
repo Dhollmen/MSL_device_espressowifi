@@ -25,6 +25,8 @@
 
 TARGET_NO_BOOTLOADER := true
 
+TARGET_PROVIDES_INIT_RC := true
+
 TARGET_BOOTLOADER_BOARD_NAME := piranha
 
 # Inline kernel building
