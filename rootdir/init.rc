@@ -10,8 +10,6 @@ import /init.rom.rc
 on early-init
     write /proc/1/oom_score_adj -1000
 
-    restorecon /adb_keys
-
     start ueventd
 
 on init
@@ -281,7 +279,6 @@ on boot
     write /proc/sys/fs/lease-break-time 30
     write /proc/sys/vm/dirty_background_ratio 10
     write /proc/sys/vm/dirty_expire_centisecs 600
-    write /proc/sys/vm/dirty_ratio 30
     write /proc/sys/vm/dirty_writeback_centisecs 1500
     write /proc/sys/vm/min_free_order_shift 4
     write /proc/sys/vm/overcommit_memory 1

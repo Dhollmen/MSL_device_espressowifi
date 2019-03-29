@@ -149,22 +149,6 @@ service variant_setup /system/bin/init.espresso.variant.sh
     oneshot
     user root
 
-on property:ro.bootmode=charger
-    mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/FACTORYFS /system wait ro
-
-on property:ro.bootmode=charger
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor 04e8
-    write /sys/class/android_usb/android0/idProduct 6860
-    write /sys/class/android_usb/android0/functions adb
-    write /sys/class/android_usb/android0/enable 1
-    write /sys/class/android_usb/android0/iManufacturer samsung
-    write /sys/class/android_usb/android0/iProduct $(ro.product.model)
-    start adbd
-
-on property:ro.bootmode=charger
-    class_start charger
-
 service charger /sbin/healthd -c
     class charger
     critical
