@@ -20,8 +20,10 @@
 # Inherit common omap4 board config
 -include hardware/ti/omap4/BoardConfigCommon.mk
 
-# Build SGX KM
--include hardware/ti/omap4/pvr-km.mk
+ifneq ($(KERNEL_DHOLLMEN),true)
+    # Build SGX KM
+    -include hardware/ti/omap4/pvr-km.mk
+endif
 
 TARGET_NO_BOOTLOADER := true
 
@@ -31,7 +33,11 @@ TARGET_BOOTLOADER_BOARD_NAME := piranha
 
 # Inline kernel building
 TARGET_KERNEL_SOURCE := kernel/ti/omap4
-TARGET_KERNEL_CONFIG := espresso_defconfig
+ifeq ($(KERNEL_DHOLLMEN),true)
+    TARGET_KERNEL_CONFIG := dhollmen_defconfig
+else
+    TARGET_KERNEL_CONFIG := espresso_defconfig
+endif
 BOARD_NAND_PAGE_SIZE := 4096
 BOARD_NAND_SPARE_SIZE := 128
 BOARD_KERNEL_PAGESIZE := 2048
