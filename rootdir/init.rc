@@ -389,9 +389,6 @@ on property:security.perf_harden=1
 on property:ro.kernel.qemu=1
     start adbd
 
-on property:ro.debuggable=1
-    start console
-
 on property:persist.logd.logpersistd=logcatd
     mkdir /data/misc/logd 0700 logd log
     exec - logd log -- /system/bin/logcat -L -b all -v threadtime -v usec -v printable -D -f /data/misc/logd/logcat -r 1024 -n 256
@@ -420,14 +417,6 @@ service healthd /sbin/healthd
     critical
     group root system
     seclabel u:r:healthd:s0
-
-service console /system/bin/sh
-    class core
-    disabled
-    console
-    user shell
-    group shell log
-    seclabel u:r:shell:s0
 
 service adbd /sbin/adbd --root_seclabel=u:r:su:s0
     class core
@@ -567,6 +556,7 @@ service pre-recovery /system/bin/uncrypt --reboot
 
 service perfprofd /system/xbin/perfprofd
     class late_start
+    disabled    
     oneshot
     user root
     writepid /dev/cpuset/system-background/tasks
